@@ -422,6 +422,16 @@ class _TabSwitchingViewState extends State<_TabSwitchingView>
     }
   }
 
+  Offset _buildOffset(int index){
+    var animationValue = _animations[index].value;
+
+    if(widget.screenTransitionAnimation.textDirection == TextDirection.rtl){
+      animationValue *= -1;
+    }
+
+    return Offset(animationValue, 0);
+  }
+
   Widget _buildScreens() {
     return Container(
       color: CupertinoColors.black,
@@ -445,7 +455,7 @@ class _TabSwitchingViewState extends State<_TabSwitchingView>
                           ? AnimatedBuilder(
                               animation: _animations[index],
                               builder: (context, child) => Transform.translate(
-                                offset: Offset(_animations[index].value, 0),
+                                offset: _buildOffset(index),
                                 child: widget.tabBuilder(context, index),
                               ),
                             )
